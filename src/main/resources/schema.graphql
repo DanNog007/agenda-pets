@@ -1,7 +1,3 @@
-schema {
-	query: Query
-}
-
 type Atendimento {
     id: ID!,
     cliente: Cliente!,

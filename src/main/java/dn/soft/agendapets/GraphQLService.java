@@ -11,8 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
-import dn.soft.agendapets.datafetchers.ClienteDataFetcher;
-import dn.soft.agendapets.datafetchers.ClientesDataFetcher;
+import dn.soft.agendapets.datafetchers.ClienteDataFetchers;
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
@@ -29,10 +28,7 @@ public class GraphQLService {
 	private GraphQL graphQL;
 	
 	@Autowired
-	ClientesDataFetcher clientesDataFetcher;
-	
-	@Autowired
-	ClienteDataFetcher clienteDataFetcher;
+	ClienteDataFetchers clienteDataFetchers;
 	
 	@PostConstruct
 	private void loadSchema() throws IOException {
@@ -48,8 +44,8 @@ public class GraphQLService {
 	private RuntimeWiring buildRuntimeWiring() {
 		return RuntimeWiring.newRuntimeWiring()
 				.type("Query", typeWiring -> typeWiring
-						.dataFetcher("clientes", clientesDataFetcher)
-						.dataFetcher("cliente", clienteDataFetcher))
+						.dataFetcher("clientes", clienteDataFetchers.getTodosClientes())
+						.dataFetcher("cliente", clienteDataFetchers.getClienteById()))
 				.build();
 	}
 	
