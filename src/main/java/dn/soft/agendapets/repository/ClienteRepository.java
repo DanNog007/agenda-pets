@@ -6,6 +6,4 @@ import dn.soft.agendapets.model.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	
-	
-
 }
