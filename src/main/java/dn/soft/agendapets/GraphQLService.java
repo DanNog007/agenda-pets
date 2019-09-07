@@ -11,7 +11,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
+import dn.soft.agendapets.datafetchers.AtendimentoDataFetchers;
 import dn.soft.agendapets.datafetchers.ClienteDataFetchers;
+import dn.soft.agendapets.datafetchers.PetDataFetchers;
+import dn.soft.agendapets.datafetchers.ServicoDataFetchers;
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
@@ -29,6 +32,12 @@ public class GraphQLService {
 	
 	@Autowired
 	ClienteDataFetchers clienteDataFetchers;
+	@Autowired
+	PetDataFetchers petDataFetchers;
+	@Autowired
+	ServicoDataFetchers servicoDataFetchers;
+	@Autowired
+	AtendimentoDataFetchers atendimentoDataFetchers;
 	
 	@PostConstruct
 	private void loadSchema() throws IOException {
@@ -45,11 +54,26 @@ public class GraphQLService {
 		return RuntimeWiring.newRuntimeWiring()
 				.type("Query", typeWiring -> typeWiring
 						.dataFetcher("clientes", clienteDataFetchers.getTodosClientes())
-						.dataFetcher("cliente", clienteDataFetchers.getClienteById()))
+						.dataFetcher("cliente", clienteDataFetchers.getClienteById())
+						.dataFetcher("pets", petDataFetchers.getTodosPets())
+						.dataFetcher("pet", petDataFetchers.getPetById())
+						.dataFetcher("servicos", servicoDataFetchers.getTodosServicos())
+						.dataFetcher("servico", servicoDataFetchers.getServicoById())
+						.dataFetcher("atendimentos", atendimentoDataFetchers.getTodosAtendimentos())
+						.dataFetcher("atendimento", atendimentoDataFetchers.getAtendimentoById()))
 				.type("Mutation", typeWiring -> typeWiring
 						.dataFetcher("adicionarCliente", clienteDataFetchers.addCliente())
 						.dataFetcher("atualizarCliente", clienteDataFetchers.updateCliente())
-						.dataFetcher("deletarCliente", clienteDataFetchers.deleteCliente()))
+						.dataFetcher("deletarCliente", clienteDataFetchers.deleteCliente())
+						.dataFetcher("adicionarPet", petDataFetchers.addPet())
+						.dataFetcher("atualizarPet", petDataFetchers.updatePet())
+						.dataFetcher("deletarPet", petDataFetchers.deletePet())
+						.dataFetcher("adicionarServico", servicoDataFetchers.addServico())
+						.dataFetcher("atualizarServico", servicoDataFetchers.updateServico())
+						.dataFetcher("deletarServico", servicoDataFetchers.deleteServico())
+						.dataFetcher("adicionarAtendimento", atendimentoDataFetchers.addAtendimento())
+						.dataFetcher("atualizarAtendimento", atendimentoDataFetchers.updateAtendimento())
+						.dataFetcher("deletarAtendimento", atendimentoDataFetchers.deleteAtendimento()))
 				.build();
 	}
 	
