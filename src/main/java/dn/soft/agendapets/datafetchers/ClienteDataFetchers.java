@@ -15,7 +15,7 @@ public class ClienteDataFetchers {
     public DataFetcher getClienteById() {
         return dataFetchingEnvironment -> {
             Integer clienteId = Integer.parseInt(dataFetchingEnvironment.getArgument("id"));
-            return clienteRepository.findById(clienteId.toString());
+            return clienteRepository.findById(clienteId);
         };
     }
 
