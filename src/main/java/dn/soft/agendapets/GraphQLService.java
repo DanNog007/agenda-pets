@@ -47,7 +47,9 @@ public class GraphQLService {
 						.dataFetcher("clientes", clienteDataFetchers.getTodosClientes())
 						.dataFetcher("cliente", clienteDataFetchers.getClienteById()))
 				.type("Mutation", typeWiring -> typeWiring
-						.dataFetcher("adicionarCliente", clienteDataFetchers.addCliente()))
+						.dataFetcher("adicionarCliente", clienteDataFetchers.addCliente())
+						.dataFetcher("atualizarCliente", clienteDataFetchers.updateCliente())
+						.dataFetcher("deletarCliente", clienteDataFetchers.deleteCliente()))
 				.build();
 	}
 	
