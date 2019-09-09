@@ -1,15 +1,16 @@
 package dn.soft.agendapets;
 
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 
 import dn.soft.agendapets.datafetchers.AtendimentoDataFetchers;
 import dn.soft.agendapets.datafetchers.ClienteDataFetchers;
@@ -25,9 +26,6 @@ import graphql.schema.idl.TypeDefinitionRegistry;
 @Component
 public class GraphQLService {
 	
-	@Value("classpath:schema.graphql")
-	Resource resource;
-	
 	private GraphQL graphQL;
 	
 	@Autowired
@@ -42,9 +40,10 @@ public class GraphQLService {
 	@PostConstruct
 	private void loadSchema() throws IOException {
 		//get the schema
-		File schemaFile = resource.getFile();
+		URL url = Resources.getResource("schema.graphql");
+        String sdl = Resources.toString(url, Charsets.UTF_8);
 		//parse schema
-		TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(schemaFile);
+		TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(sdl);
 		RuntimeWiring wiring = buildRuntimeWiring();
 		GraphQLSchema schema = new SchemaGenerator().makeExecutableSchema(typeRegistry, wiring);
 		graphQL = GraphQL.newGraphQL(schema).build();
