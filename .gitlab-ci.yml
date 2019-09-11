@@ -1,0 +1,44 @@
+image: openjdk:8-jdk-alpine
+
+before_script:
+  - apk add maven
+  
+cache:
+  key: BUILD
+  paths:
+    - target/*.jar
+
+stages:
+  - test
+  - build
+  - deploy
+  
+teste:
+  stage: test
+  script:
+    - mvn test
+  
+build:
+  stage: build
+  script:
+    - mvn clean package
+  artifacts:
+    name: Pacote-Build
+    paths:
+      - target/*.jar
+  cache:
+    key: BUILD
+    paths:
+      - target/*.jar
+    policy: push
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Ready to deploy - implement later..."
+  cache:
+    key: BUILD
+    paths:
+      - target/*.jar
+    policy: pull
+  allow_failure: true
