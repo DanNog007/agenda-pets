@@ -1,8 +1,12 @@
-image: openjdk:8-jdk-alpine
+image: openjdk:8-jdk
 
 before_script:
-  - apk add maven
-  
+  - cd /opt
+  - wget http://ftp.unicamp.br/pub/apache/maven/maven-3/3.6.2/binaries/apache-maven-3.6.2-bin.tar.gz
+  - tar xzvf apache-maven-3.6.2-bin.tar.gz
+  - export PATH=${PATH}:/opt/apache-maven-3.6.2/bin/
+  - cd /
+
 cache:
   key: BUILD
   paths:
@@ -26,6 +30,7 @@ build:
     name: Pacote-Build
     paths:
       - target/*.jar
+    expire_in: 1 week
   cache:
     key: BUILD
     paths:
@@ -34,11 +39,13 @@ build:
 
 deploy:
   stage: deploy
+  before_script:
+    - curl https://cli-assets.heroku.com/install.sh | sh
   script:
-    - echo "Ready to deploy - implement later..."
+    - heroku plugins:install java
+    - heroku deploy:jar target/agenda-pets-0.0.1-SNAPSHOT.jar --app dn-teste
   cache:
     key: BUILD
     paths:
       - target/*.jar
     policy: pull
-  allow_failure: true
