@@ -1,0 +1,63 @@
+type Atendimento {
+    id: ID!,
+    cliente: Cliente!,
+    pet: Pet!,
+    servico: Servico!,
+    data: String!,
+    status: String,
+    observacoes: String
+}
+
+type Cliente {
+    id: ID!
+    nome: String!
+    cpf: String!
+    pets: [Pet!]
+}
+
+type Pet {
+    id: ID!
+    nome: String!
+    tipo: String
+    observacoes: String
+    dono: Cliente!
+}
+
+type Servico {
+    id: ID!
+    nome: String!
+    preco: Float!
+    descricao: String
+}
+
+type Query {
+    atendimentos: [Atendimento!]!
+    atendimento(id: ID!): Atendimento!
+    
+    clientes: [Cliente!]!
+    cliente(id: ID!): Cliente!
+    
+    pets: [Pet!]!
+    pet(id: ID!): Pet!
+    
+    servicos: [Servico!]!
+    servico(id: ID!): Servico!
+}
+
+type Mutation {
+    adicionarAtendimento(clienteId: Int!, petId: Int!, servicoId: Int!, status: String, observacoes: String): Atendimento!
+    atualizarAtendimento(id: ID!, clienteId: Int!, petId: Int!, servicoId: Int!, status: String, observacoes: String): Atendimento!
+    deletarAtendimento(id: ID!): ID!
+    
+    adicionarCliente(nome: String!, cpf: String!): Cliente!
+    atualizarCliente(id: ID!, nome: String!, cpf: String!): Cliente!
+    deletarCliente(id: ID!): ID!
+    
+    adicionarPet(nome: String!, donoId: Int!, tipo: String, observacoes: String): Pet!
+    atualizarPet(id: ID!, nome: String!, donoId: Int!, tipo: String, observacoes: String): Pet!
+    deletarPet(id: ID!): ID!
+    
+    adicionarServico(nome: String!, preco: Float!, descricao: String): Servico!
+    atualizarServico(id: ID!, nome: String!, preco: Float!, descricao: String): Servico!
+    deletarServico(id: ID!): ID!
+}
