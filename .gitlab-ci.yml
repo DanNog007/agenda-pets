@@ -1,6 +1,7 @@
 image: openjdk:8-jdk
 
 before_script:
+  - pwd
   - cd /opt
   - wget http://ftp.unicamp.br/pub/apache/maven/maven-3/3.6.2/binaries/apache-maven-3.6.2-bin.tar.gz
   - tar xzvf apache-maven-3.6.2-bin.tar.gz
