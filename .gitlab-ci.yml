@@ -49,6 +49,6 @@ deploy:
     paths:
       - target/*.jar
     policy: pull
-  enviroment:
+  environment:
     name: HerokuTest
     url: https://dn-teste.herokuapp.com/playground
