@@ -17,7 +17,7 @@ Projeto de avaliação do GraphQL em conjunto com SpringBoot(Java).
 3. Feito isso será necessário definir algumas variáveis de ambiente com as informações para a conexão com o banco:
 
    - PETS_DB_HOST: Caso o banco não esteja local, deve se informar o endereço do host do banco de dados. Ex. 189.10.9.88
-   - PETS_DB_PORT: Caso o banco não esteja rodando na porta padrão, deve passar a porta em que o caso está rodando.
+   - PETS_DB_PORT: Caso o banco não esteja rodando na porta padrão, devera passar a porta em que o banco está rodando.
    - PETS_DB_NAME: Deverá conter o nome da base de dados que foi criada no passo 1
    - PETS_DB_SCHEMA: Caso tenha criado um Schema diferente de 'api', deverá definir nesta variável
    - PETS_DB_USER: Devera ser informado o usuário  para conexão com a base de dados
@@ -55,3 +55,7 @@ Após ter realizado o build basta executar o comando abaixo, e terá sua aplica�
 java -jar target/agenda-pets-0.0.1-SNAPSHOT.jar
 ```
 
+Por padrão a aplicação vai iniciar na porta 5000, portanto para acessar localmente acesse o  endereço:
+
+- [localhost:5000/playground](http://localhost:5000/playground) - Para acessar o playground
+- [localhost:5000/graphql](http://localhost:5000/graphql) - Endpoint que recebe as requisições
