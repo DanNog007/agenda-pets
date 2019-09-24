@@ -14,6 +14,7 @@ import com.google.common.io.Resources;
 
 import dn.soft.agendapets.datafetchers.AtendimentoDataFetchers;
 import dn.soft.agendapets.datafetchers.ClienteDataFetchers;
+import dn.soft.agendapets.datafetchers.ComponenteDataFetchers;
 import dn.soft.agendapets.datafetchers.PetDataFetchers;
 import dn.soft.agendapets.datafetchers.ServicoDataFetchers;
 import graphql.GraphQL;
@@ -24,7 +25,7 @@ import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
 
 @Component
-public class GraphQLService {
+public class GraphQLProvider {
 	
 	private GraphQL graphQL;
 	
@@ -36,6 +37,8 @@ public class GraphQLService {
 	ServicoDataFetchers servicoDataFetchers;
 	@Autowired
 	AtendimentoDataFetchers atendimentoDataFetchers;
+	@Autowired
+	ComponenteDataFetchers componenteDataFetchers;
 	
 	@PostConstruct
 	private void loadSchema() throws IOException {
@@ -59,7 +62,9 @@ public class GraphQLService {
 						.dataFetcher("servicos", servicoDataFetchers.getTodosServicos())
 						.dataFetcher("servico", servicoDataFetchers.getServicoById())
 						.dataFetcher("atendimentos", atendimentoDataFetchers.getTodosAtendimentos())
-						.dataFetcher("atendimento", atendimentoDataFetchers.getAtendimentoById()))
+						.dataFetcher("atendimento", atendimentoDataFetchers.getAtendimentoById())
+						.dataFetcher("componentes", componenteDataFetchers.getTodosComponentes())
+						.dataFetcher("componente", componenteDataFetchers.getComponenteById()))
 				.type("Mutation", typeWiring -> typeWiring
 						.dataFetcher("adicionarCliente", clienteDataFetchers.addCliente())
 						.dataFetcher("atualizarCliente", clienteDataFetchers.updateCliente())
@@ -72,7 +77,8 @@ public class GraphQLService {
 						.dataFetcher("deletarServico", servicoDataFetchers.deleteServico())
 						.dataFetcher("adicionarAtendimento", atendimentoDataFetchers.addAtendimento())
 						.dataFetcher("atualizarAtendimento", atendimentoDataFetchers.updateAtendimento())
-						.dataFetcher("deletarAtendimento", atendimentoDataFetchers.deleteAtendimento()))
+						.dataFetcher("deletarAtendimento", atendimentoDataFetchers.deleteAtendimento())
+						.dataFetcher("adicionarComponente", componenteDataFetchers.addComponente()))
 				.build();
 	}
 	
