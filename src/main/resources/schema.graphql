@@ -73,4 +73,5 @@ type Mutation {
     deletarServico(id: ID!): ID!
     
     adicionarComponente(jsonString: String!): Componente!
+    adicionarComponentes(jsonString: String!): [Componente!]!
 }

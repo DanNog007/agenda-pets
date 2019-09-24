@@ -78,7 +78,8 @@ public class GraphQLProvider {
 						.dataFetcher("adicionarAtendimento", atendimentoDataFetchers.addAtendimento())
 						.dataFetcher("atualizarAtendimento", atendimentoDataFetchers.updateAtendimento())
 						.dataFetcher("deletarAtendimento", atendimentoDataFetchers.deleteAtendimento())
-						.dataFetcher("adicionarComponente", componenteDataFetchers.addComponente()))
+						.dataFetcher("adicionarComponente", componenteDataFetchers.addComponente())
+						.dataFetcher("adicionarComponentes", componenteDataFetchers.addComponentes()))
 				.build();
 	}
 	
