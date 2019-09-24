@@ -30,6 +30,14 @@ type Servico {
     descricao: String
 }
 
+type Componente {
+    id: ID!
+    nome: String
+    codigo: String
+    titulo: String
+    dados: String!
+}
+
 type Query {
     atendimentos: [Atendimento!]!
     atendimento(id: ID!): Atendimento!
@@ -42,6 +50,9 @@ type Query {
     
     servicos: [Servico!]!
     servico(id: ID!): Servico!
+    
+    componentes: [Componente!]!
+    componente(id: ID!): Componente!
 }
 
 type Mutation {
@@ -60,4 +71,6 @@ type Mutation {
     adicionarServico(nome: String!, preco: Float!, descricao: String): Servico!
     atualizarServico(id: ID!, nome: String!, preco: Float!, descricao: String): Servico!
     deletarServico(id: ID!): ID!
+    
+    adicionarComponente(jsonString: String!): Componente!
 }
