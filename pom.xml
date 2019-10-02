@@ -6,7 +6,7 @@
 	<groupId>dn.soft</groupId>
 	<artifactId>agenda-pets</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>agenda-pets</name>
 	<url>http://maven.apache.org</url>
@@ -104,5 +104,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>ROOT</finalName>
 	</build>
 </project>
