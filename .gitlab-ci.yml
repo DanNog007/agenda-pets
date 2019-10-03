@@ -5,7 +5,7 @@ before_script:
   - wget http://ftp.unicamp.br/pub/apache/maven/maven-3/3.6.2/binaries/apache-maven-3.6.2-bin.tar.gz
   - tar xzvf apache-maven-3.6.2-bin.tar.gz
   - export PATH=${PATH}:/opt/apache-maven-3.6.2/bin/
-  - cd /builds/magalhaesdaniel2009/agenda-pets
+  - cd $CI_PROJECT_DIR
 
 cache:
   key: BUILD
@@ -37,7 +37,7 @@ build:
       - target/*.jar
     policy: push
 
-deploy:
+deploy_heroku:
   stage: deploy
   before_script:
     - curl https://cli-assets.heroku.com/install.sh | sh
@@ -52,3 +52,4 @@ deploy:
   environment:
     name: HerokuTest
     url: https://dn-teste.herokuapp.com/playground
+  when: manual
