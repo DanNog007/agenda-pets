@@ -57,3 +57,22 @@ deploy_heroku:
     name: HerokuTest
     url: https://dn-teste.herokuapp.com/playground
   when: manual
+  
+deploy_ssh:
+  stage: deploy
+  before_script:
+    - apt update
+    - apt install sshpass
+  script:
+    - sshpass -p $SSH_SENHA ssh -t ${SSH_USUARIO}@${SSH_SERVIDOR} "cd $SSH_SERVICES_SOURCE_PATH;echo $SSH_SENHA | sudo -S git pull"
+    - sshpass -p $SSH_SENHA ssh -t ${SSH_USUARIO}@${SSH_SERVIDOR} "cd $SSH_NGINX_SERVICES_PATH;echo $SSH_SENHA | sudo -S ./run.sh --proxy"
+  cache:
+    key: BUILD
+    paths:
+      - target/*.jar
+      - target/*.war
+    policy: pull
+  environment:
+    name: SshEnv
+    url: http://petshop-api-graphql.inema.ba.gov.br/playground
+  when: manual
