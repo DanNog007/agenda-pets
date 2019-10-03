@@ -11,6 +11,7 @@ cache:
   key: BUILD
   paths:
     - target/*.jar
+    - target/*.war
 
 stages:
   - test
@@ -30,11 +31,13 @@ build:
     name: Pacote-Build
     paths:
       - target/*.jar
+      - target/*.war
     expire_in: 1 week
   cache:
     key: BUILD
     paths:
       - target/*.jar
+      - target/*.war
     policy: push
 
 deploy_heroku:
@@ -48,6 +51,7 @@ deploy_heroku:
     key: BUILD
     paths:
       - target/*.jar
+      - target/*.war
     policy: pull
   environment:
     name: HerokuTest
