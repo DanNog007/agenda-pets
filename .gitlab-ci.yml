@@ -64,8 +64,8 @@ deploy_ssh:
     - apt update
     - apt install sshpass
   script:
-    - sshpass -p $SSH_SENHA ssh -t ${SSH_USUARIO}@${SSH_SERVIDOR} "cd $SSH_SERVICES_SOURCE_PATH;echo $SSH_SENHA | sudo -S git pull"
-    - sshpass -p $SSH_SENHA ssh -t ${SSH_USUARIO}@${SSH_SERVIDOR} "cd $SSH_NGINX_SERVICES_PATH;echo $SSH_SENHA | sudo -S ./run.sh --proxy"
+    - sshpass -p $SSH_SENHA ssh -tt ${SSH_USUARIO}@${SSH_SERVIDOR} "cd $SSH_SERVICES_SOURCE_PATH;echo $SSH_SENHA | sudo -S git pull"
+    - sshpass -p $SSH_SENHA ssh -tt ${SSH_USUARIO}@${SSH_SERVIDOR} "cd $SSH_NGINX_SERVICES_PATH;echo $SSH_SENHA | sudo -S ./run.sh --proxy"
   cache:
     key: BUILD
     paths:
