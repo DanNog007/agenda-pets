@@ -6,7 +6,6 @@
 	<groupId>dn.soft</groupId>
 	<artifactId>agenda-pets</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 
 	<name>agenda-pets</name>
 	<url>http://maven.apache.org</url>
@@ -20,7 +19,11 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		
+		<p.type>war</p.type>
 	</properties>
+	
+	<packaging>${p.type}</packaging>
 
 	<dependencies>
 		<!-- SPRING BOOT -->
