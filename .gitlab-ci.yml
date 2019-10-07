@@ -58,6 +58,27 @@ deploy_heroku:
     url: https://dn-teste.herokuapp.com/playground
   when: manual
   
+#deploy_ssh:
+#  stage: deploy
+#  before_script:
+#    - apt update
+#    - apt install sshpass
+#    - mkdir -p ~/.ssh
+#    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+#  script:
+#    - sshpass -p $SSH_SENHA ssh -tt ${SSH_USUARIO}@${SSH_SERVIDOR} "cd $SSH_SERVICES_SOURCE_PATH;echo $SSH_SENHA | sudo -S git pull"
+#    - sshpass -p $SSH_SENHA ssh -tt ${SSH_USUARIO}@${SSH_SERVIDOR} "cd $SSH_NGINX_SERVICES_PATH;echo $SSH_SENHA | sudo -S ./run.sh --proxy"
+#  cache:
+#    key: BUILD
+#    paths:
+#      - target/*.jar
+#      - target/*.war
+#    policy: pull
+#  environment:
+#    name: SshEnv
+#    url: http://petshop-api-graphql.inema.ba.gov.br/playground
+#  when: manual
+
 deploy_ssh:
   stage: deploy
   before_script:
@@ -66,8 +87,10 @@ deploy_ssh:
     - mkdir -p ~/.ssh
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   script:
-    - sshpass -p $SSH_SENHA ssh -tt ${SSH_USUARIO}@${SSH_SERVIDOR} "cd $SSH_SERVICES_SOURCE_PATH;echo $SSH_SENHA | sudo -S git pull"
-    - sshpass -p $SSH_SENHA ssh -tt ${SSH_USUARIO}@${SSH_SERVIDOR} "cd $SSH_NGINX_SERVICES_PATH;echo $SSH_SENHA | sudo -S ./run.sh --proxy"
+    - sshpass -p $SSH_SENHA ssh ${SSH_USUARIO}@${SSH_SERVIDOR} "mkdir $CI_COMMIT_SHA"
+    - sshpass -p $SSH_SENHA scp target/*.war ${SSH_USUARIO}@${SSH_SERVIDOR}:${SSH_PUBLIC_PATH}/${CI_COMMIT_SHA}
+    - sshpass -p $SSH_SENHA ssh ${SSH_USUARIO}@${SSH_SERVIDOR} "cd $CI_COMMIT_SHA; echo $SSH_SENHA | sudo -S mv *.war $SSH_SERVICES_SOURCE_PATH/target"
+    - sshpass -p $SSH_SENHA ssh ${SSH_USUARIO}@${SSH_SERVIDOR} "echo $SSH_SENHA | sudo -S rm -r $CI_COMMIT_SHA"
   cache:
     key: BUILD
     paths:
