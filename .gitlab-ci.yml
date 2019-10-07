@@ -56,7 +56,10 @@ deploy_heroku:
   environment:
     name: HerokuTest
     url: https://dn-teste.herokuapp.com/playground
-  when: manual
+  rules:
+    - if: '$DEPLOY_MODE == "HEROKU"'
+      when: on_success
+    - when: manual
   
 #deploy_ssh:
 #  stage: deploy
@@ -100,4 +103,7 @@ deploy_ssh:
   environment:
     name: SshEnv
     url: http://petshop-api-graphql.inema.ba.gov.br/playground
-  when: manual
+  rules:
+    - if: '$DEPLOY_MODE == "SSH"'
+      when: on_success
+    - when: manual
