@@ -78,7 +78,7 @@ deploy_ssh:
     - sshpass -p $SSH_SENHA ssh ${SSH_USUARIO}@${SSH_SERVIDOR} "echo $SSH_SENHA | sudo -S rm -r $CI_COMMIT_SHA"
   environment:
     name: SshEnv
-    url: http://petshop-api-graphql.inema.ba.gov.br/playground
+    url: $SSH_ENV_LINK
 #  rules:
 #    - if: '$DEPLOY_MODE == "SSH"'
 #      when: on_success
