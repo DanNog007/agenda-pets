@@ -1,10 +1,13 @@
 package dn.soft.agendapets.datafetchers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import dn.soft.agendapets.model.Cliente;
 import dn.soft.agendapets.model.Pet;
+import dn.soft.agendapets.repository.ClienteRepository;
 import dn.soft.agendapets.repository.PetRepository;
 import graphql.schema.DataFetcher;
 
@@ -14,6 +17,8 @@ public class PetDataFetchers {
 	
 	@Autowired
 	PetRepository petRepository;
+	@Autowired
+	ClienteRepository clienteRepository;
 
     
 	public DataFetcher getPetById() {
@@ -36,12 +41,11 @@ public class PetDataFetchers {
             String tipo = dataFetchingEnvironment.getArgument("tipo");
             String observacoes = dataFetchingEnvironment.getArgument("observacoes");
             
-            Cliente dono = new Cliente();
-            dono.setId(donoId);
+            Optional<Cliente> dono = clienteRepository.findById(donoId);
             
             Pet pet = new Pet();
             pet.setNome(nome);
-            pet.setDono(dono);
+            pet.setDono(dono.get());
             pet.setTipo(tipo);
             pet.setObservacoes(observacoes);
             
@@ -57,13 +61,12 @@ public class PetDataFetchers {
             String tipo = dataFetchingEnvironment.getArgument("tipo");
             String observacoes = dataFetchingEnvironment.getArgument("observacoes");
             
-            Cliente dono = new Cliente();
-            dono.setId(donoId);
+            Optional<Cliente> dono = clienteRepository.findById(donoId);
             
             Pet pet = new Pet();
             pet.setId(petId);
             pet.setNome(nome);
-            pet.setDono(dono);
+            pet.setDono(dono.get());
             pet.setTipo(tipo);
             pet.setObservacoes(observacoes);
             

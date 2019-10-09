@@ -1,5 +1,6 @@
 package dn.soft.agendapets.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
@@ -69,8 +70,12 @@ public class Atendimento {
 		this.servico = servico;
 	}
 
-	public Calendar getData() {
-		return data;
+	public String getData() {
+		if (data == null) {
+			return null;
+		}
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return format.format(data.getTime());
 	}
 
 	public void setData(Calendar data) {

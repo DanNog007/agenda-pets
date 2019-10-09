@@ -1,5 +1,8 @@
 package dn.soft.agendapets.datafetchers;
 
+import java.util.Calendar;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,6 +11,9 @@ import dn.soft.agendapets.model.Cliente;
 import dn.soft.agendapets.model.Pet;
 import dn.soft.agendapets.model.Servico;
 import dn.soft.agendapets.repository.AtendimentoRepository;
+import dn.soft.agendapets.repository.ClienteRepository;
+import dn.soft.agendapets.repository.PetRepository;
+import dn.soft.agendapets.repository.ServicoRepository;
 import graphql.schema.DataFetcher;
 
 @Component
@@ -16,6 +22,12 @@ public class AtendimentoDataFetchers {
 	
 	@Autowired
 	AtendimentoRepository atendimentoRepository;
+	@Autowired
+	ClienteRepository clienteRepository;
+	@Autowired
+	PetRepository petRepository;
+	@Autowired
+	ServicoRepository servicoRepository;
 
     
 	public DataFetcher getAtendimentoById() {
@@ -39,21 +51,21 @@ public class AtendimentoDataFetchers {
             String status = dataFetchingEnvironment.getArgument("status");
             String observacoes = dataFetchingEnvironment.getArgument("observacoes");
             
-            Cliente cliente = new Cliente();
-            cliente.setId(clienteId);
+            Optional<Cliente> cliente = clienteRepository.findById(clienteId);
             
-            Pet pet = new Pet();
-            pet.setId(petId);
+            Optional<Pet> pet = petRepository.findById(petId);
             
-            Servico servico = new Servico();
-            servico.setId(servicoId);
+            Optional<Servico> servico = servicoRepository.findById(servicoId);
             
             Atendimento atendimento = new Atendimento();
-            atendimento.setCliente(cliente);
-            atendimento.setPet(pet);
-            atendimento.setServico(servico);
+            atendimento.setCliente(cliente.get());
+            atendimento.setPet(pet.get());
+            atendimento.setServico(servico.get());
             atendimento.setStatus(status);
             atendimento.setObservacoes(observacoes);
+            
+            Calendar data = Calendar.getInstance();
+            atendimento.setData(data);
             
             return atendimentoRepository.save(atendimento);
         };
@@ -68,20 +80,17 @@ public class AtendimentoDataFetchers {
             String status = dataFetchingEnvironment.getArgument("status");
             String observacoes = dataFetchingEnvironment.getArgument("observacoes");
             
-            Cliente cliente = new Cliente();
-            cliente.setId(clienteId);
+            Optional<Cliente> cliente = clienteRepository.findById(clienteId);
             
-            Pet pet = new Pet();
-            pet.setId(petId);
+            Optional<Pet> pet = petRepository.findById(petId);
             
-            Servico servico = new Servico();
-            servico.setId(servicoId);
+            Optional<Servico> servico = servicoRepository.findById(servicoId);
             
             Atendimento atendimento = new Atendimento();
             atendimento.setId(atendimentoId);
-            atendimento.setCliente(cliente);
-            atendimento.setPet(pet);
-            atendimento.setServico(servico);
+            atendimento.setCliente(cliente.get());
+            atendimento.setPet(pet.get());
+            atendimento.setServico(servico.get());
             atendimento.setStatus(status);
             atendimento.setObservacoes(observacoes);
             

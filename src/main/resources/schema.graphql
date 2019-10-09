@@ -3,7 +3,7 @@ type Atendimento {
     cliente: Cliente!,
     pet: Pet!,
     servico: Servico!,
-    data: String!,
+    data: String,
     status: String,
     observacoes: String
 }
