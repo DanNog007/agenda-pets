@@ -42,7 +42,7 @@ mvn test
 Para realizar o build da aplicação, execute o comando abaixo:
 
 ```bash
-mvn clean package
+mvn clean package -Dp.type=jar
 ```
 
 Após o comando finalizar será gerado o arquivo 'target/agenda-pets-0.0.1-SNAPSHOT.jar'
